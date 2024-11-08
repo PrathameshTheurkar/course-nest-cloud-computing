@@ -27,8 +27,6 @@ app.use('/users', userRouter)
 
 
 
-// Connect to MongoDB
-// mongoose.connect('mongodb+srv://prathameshtheurkar037:Prathamesh%401@cluster0.s8asa1j.mongodb.net/'  ,  { dbName: 'course-selling-app' })
 export const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
