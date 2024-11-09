@@ -15,9 +15,9 @@ dotenv.config({
 })
 app.use(express.json());
 
-// const buildPath = path.join(__dirname, '../../admin/dist')
+const buildPath = path.join(__dirname, '../../admin/dist')
 
-// app.use(express.static(buildPath))
+app.use(express.static(buildPath))
 
 app.use(cors())
 app.use(cookieParser())
@@ -26,12 +26,11 @@ app.use('/admin', adminRouter)
 app.use('/users', userRouter)
 
 
-
 export const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Prathamesh@1',
-  database: 'course_nest'
+  host: process.env.RDS_HOST || '',
+  user: process.env.RDS_USER || '',
+  password: process.env.RDS_PASSWORD || '',
+  database: process.env.RDS_DATABASE || ''
 });
 
 db.connect((err) => {
@@ -119,11 +118,11 @@ app.get('/home', (req, res) => {
  res.json({msg: 'Welcome Home'})      
 })
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../admin/dist', 'index.html'), (err) => {
-//     if(err)res.status(500).send(err)
-//   })
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../admin/dist', 'index.html'), (err) => {
+    if(err)res.status(500).send(err)
+  })
+})
 app.listen(3000, () => {
   console.log('Server is listening on port 3000');
 });
